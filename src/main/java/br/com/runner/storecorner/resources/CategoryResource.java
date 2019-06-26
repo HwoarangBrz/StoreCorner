@@ -1,25 +1,26 @@
 package br.com.runner.storecorner.resources;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.runner.storecorner.domain.Category;
+import br.com.runner.storecorner.services.CategoryService;
 
 @RestController
 @RequestMapping(value = "/categories")
 public class CategoryResource {
+	
+	@Autowired
+	private CategoryService service;
+	
 
-	@RequestMapping(method = RequestMethod.GET)
-	public List<Category> list() {
-		Category cat1 = new Category(1, "Informática");
-		Category cat2 = new Category(2, "Escritório");
-		List<Category> lista = new ArrayList<>();
-		lista.add(cat1);
-		lista.add(cat2);
-		return lista;
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	public ResponseEntity<?> list(@PathVariable Integer id) {
+		Category obj = service.find(id);
+		return ResponseEntity.ok().body(obj);
 	}
 }
