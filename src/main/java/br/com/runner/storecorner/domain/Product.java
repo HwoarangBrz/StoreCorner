@@ -8,28 +8,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-@Entity
-public class Category implements Serializable{
-	private static final long serialVersionUID = 1L;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
+public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
+	private Double price;
 	
-	@ManyToMany(mappedBy="categories")
-	private List<Product> products = new ArrayList<>();
+	@JsonIgnore
+	@ManyToMany
+	@JoinTable(name="PRODUCT_CATEGORY",
+			joinColumns=@JoinColumn(name="product_id"),
+			inverseJoinColumns=@JoinColumn(name="category_id"))
+	private List<Category> categories = new ArrayList<>();
 	
-	public Category() {
-		super();
+	public Product() {
 	}
 
-	public Category(Integer id, String name) {
-		super();
+	public Product(Integer id, String name, Double price) {
 		this.id = id;
 		this.name = name;
+		this.price = price;
 	}
 
 	public Integer getId() {
@@ -48,12 +56,20 @@ public class Category implements Serializable{
 		this.name = name;
 	}
 
-	public List<Product> getProducts() {
-		return products;
+	public Double getPrice() {
+		return price;
 	}
 
-	public void setProducts(List<Product> products) {
-		this.products = products;
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
+	public List<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(List<Category> categories) {
+		this.categories = categories;
 	}
 
 	@Override
@@ -72,7 +88,7 @@ public class Category implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Category other = (Category) obj;
+		Product other = (Product) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -83,6 +99,7 @@ public class Category implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Category [id=" + id + ", name=" + name + "]";
+		return "Product [id=" + id + ", name=" + name + ", price=" + price + "]";
 	}
+	
 }
