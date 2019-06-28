@@ -1,45 +1,34 @@
 package br.com.runner.storecorner.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class Product implements Serializable {
+public class City implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String name;
-	private Double price;
 	
-	@JsonIgnore
-	@JsonBackReference
-	@ManyToMany
-	@JoinTable(name="PRODUCT_CATEGORY",
-			joinColumns=@JoinColumn(name="product_id"),
-			inverseJoinColumns=@JoinColumn(name="category_id"))
-	private List<Category> categories = new ArrayList<>();
+	@ManyToOne
+	@JoinColumn(name="state_id")
+	private State state;
 	
-	public Product() {
+	public City() {
 	}
 
-	public Product(Integer id, String name, Double price) {
+	public City(Integer id, String name) {
+		super();
 		this.id = id;
 		this.name = name;
-		this.price = price;
 	}
 
 	public Integer getId() {
@@ -57,21 +46,13 @@ public class Product implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-
-	public Double getPrice() {
-		return price;
+	
+	public State getState() {
+		return state;
 	}
 
-	public void setPrice(Double price) {
-		this.price = price;
-	}
-
-	public List<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(List<Category> categories) {
-		this.categories = categories;
+	public void setState(State state) {
+		this.state = state;
 	}
 
 	@Override
@@ -79,6 +60,7 @@ public class Product implements Serializable {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
 		return result;
 	}
 
@@ -90,18 +72,25 @@ public class Product implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Product other = (Product) obj;
+		City other = (City) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
 		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Product [id=" + id + ", name=" + name + ", price=" + price + "]";
+		return "City [id=" + id + ", name=" + name + "]";
 	}
 	
+	
+
 }

@@ -8,9 +8,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import br.com.runner.storecorner.domain.Category;
+import br.com.runner.storecorner.domain.City;
 import br.com.runner.storecorner.domain.Product;
+import br.com.runner.storecorner.domain.State;
 import br.com.runner.storecorner.repository.CategoryRepository;
+import br.com.runner.storecorner.repository.CityRepository;
 import br.com.runner.storecorner.repository.ProductRepository;
+import br.com.runner.storecorner.repository.StateRepository;
 
 @SpringBootApplication
 public class StorecornerApplication implements CommandLineRunner {
@@ -19,6 +23,10 @@ public class StorecornerApplication implements CommandLineRunner {
 	CategoryRepository repoCategory;
 	@Autowired
 	ProductRepository repoProduct;
+	@Autowired
+	CityRepository repoCity;
+	@Autowired
+	StateRepository repoState;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(StorecornerApplication.class, args);
@@ -47,6 +55,24 @@ public class StorecornerApplication implements CommandLineRunner {
 		p3.getCategories().addAll(Arrays.asList(cat1));
 		p4.getCategories().addAll(Arrays.asList(cat1, cat3));
 		p5.getCategories().addAll(Arrays.asList(cat2, cat3));
+		
+		State sta1 = new State(null, "Minas Gerais");
+		State sta2 = new State(null, "São Paulo");
+		
+		City cit1 = new City(null, "São Paulo");
+		City cit2 = new City(null, "Uberlândia");
+		City cit3 = new City(null, "Campinas");
+		
+				
+		cit1.setState(sta2);
+		cit2.setState(sta1);
+		cit3.setState(sta2);
+		
+		sta1.getCities().addAll(Arrays.asList(cit2));
+		sta2.getCities().addAll(Arrays.asList(cit1, cit3));
+		
+		repoCity.saveAll(Arrays.asList(cit1, cit2, cit3));
+		repoState.saveAll(Arrays.asList(sta1, sta2));
 		
 		repoCategory.saveAll(Arrays.asList(cat1, cat2, cat3));
 		repoProduct.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
