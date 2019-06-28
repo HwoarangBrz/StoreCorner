@@ -71,9 +71,8 @@ public class StorecornerApplication implements CommandLineRunner {
 		sta1.getCities().addAll(Arrays.asList(cit2));
 		sta2.getCities().addAll(Arrays.asList(cit1, cit3));
 		
-		repoCity.saveAll(Arrays.asList(cit1, cit2, cit3));
 		repoState.saveAll(Arrays.asList(sta1, sta2));
-		
+		repoCity.saveAll(Arrays.asList(cit1, cit2, cit3));
 		repoCategory.saveAll(Arrays.asList(cat1, cat2, cat3));
 		repoProduct.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
 	}
