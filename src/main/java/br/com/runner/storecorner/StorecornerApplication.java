@@ -7,12 +7,17 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import br.com.runner.storecorner.domain.Address;
 import br.com.runner.storecorner.domain.Category;
 import br.com.runner.storecorner.domain.City;
+import br.com.runner.storecorner.domain.Client;
 import br.com.runner.storecorner.domain.Product;
 import br.com.runner.storecorner.domain.State;
+import br.com.runner.storecorner.domain.enums.ClientType;
+import br.com.runner.storecorner.repository.AddressRepository;
 import br.com.runner.storecorner.repository.CategoryRepository;
 import br.com.runner.storecorner.repository.CityRepository;
+import br.com.runner.storecorner.repository.ClientRepository;
 import br.com.runner.storecorner.repository.ProductRepository;
 import br.com.runner.storecorner.repository.StateRepository;
 
@@ -27,6 +32,10 @@ public class StorecornerApplication implements CommandLineRunner {
 	CityRepository repoCity;
 	@Autowired
 	StateRepository repoState;
+	@Autowired
+	AddressRepository repoAddress;
+	@Autowired
+	ClientRepository repoClient;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(StorecornerApplication.class, args);
@@ -55,7 +64,10 @@ public class StorecornerApplication implements CommandLineRunner {
 		p3.getCategories().addAll(Arrays.asList(cat1));
 		p4.getCategories().addAll(Arrays.asList(cat1, cat3));
 		p5.getCategories().addAll(Arrays.asList(cat2, cat3));
-		
+
+		repoCategory.saveAll(Arrays.asList(cat1, cat2, cat3));
+		repoProduct.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+
 		State sta1 = new State(null, "Minas Gerais");
 		State sta2 = new State(null, "São Paulo");
 		
@@ -73,8 +85,16 @@ public class StorecornerApplication implements CommandLineRunner {
 		
 		repoState.saveAll(Arrays.asList(sta1, sta2));
 		repoCity.saveAll(Arrays.asList(cit1, cit2, cit3));
-		repoCategory.saveAll(Arrays.asList(cat1, cat2, cat3));
-		repoProduct.saveAll(Arrays.asList(p1, p2, p3, p4, p5));
+		
+		Client cli1 = new Client(null, "Mary Jane", "mary@gmail.com", "000111222-50", ClientType.PHYSICALPERSON);
+		cli1.getPhones().addAll(Arrays.asList("99971-0001", "99971-0002"));
+		
+		Address a1 = new Address("Street 10", "999", "", "Roosevelt", "38400", cli1, cit1);
+		Address a2 = new Address("Street 20", "100", "", "Center", "02400", cli1, cit2);
+		
+		repoClient.saveAll(Arrays.asList(cli1));
+		repoAddress.saveAll(Arrays.asList(a1, a2));
+		
 	}
 
 }
