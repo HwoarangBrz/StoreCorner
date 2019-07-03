@@ -30,6 +30,7 @@ public class Client implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name="valueName")
 	private String name;
 	
 	@Column(unique=true)
@@ -51,16 +52,21 @@ public class Client implements Serializable {
 	@CollectionTable(name="PROFILE")
 	private Set<Integer> profiles = new HashSet<>();
 	
+	@JsonIgnore
+	@OneToMany(mappedBy="client")
+	private List<Order> order = new ArrayList<>();
+	
 	public Client() {
 	}
 
-	public Client(Integer id, String name, String email, String document, ClientType type) {
+	public Client(Integer id, String name, String email, String document, ClientType type, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.email = email;
 		this.document = document;
 		this.type = (type == null) ? null : type.getCod();
+		this.password = password;
 	}
 
 	public Integer getId() {
@@ -137,6 +143,14 @@ public class Client implements Serializable {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public List<Order> getOrders() {
+		return order;
+	}
+
+	public void setOrders(List<Order> order) {
+		this.order = order;
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package br.com.runner.storecorner.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ public class City implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
+	@Column(name="valueName")
 	private String name;
 	
 	@ManyToOne
@@ -25,10 +27,11 @@ public class City implements Serializable {
 	public City() {
 	}
 
-	public City(Integer id, String name) {
+	public City(Integer id, String name, State est1) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.setState(est1);
 	}
 
 	public Integer getId() {

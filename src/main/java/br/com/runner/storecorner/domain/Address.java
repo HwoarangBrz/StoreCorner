@@ -36,8 +36,9 @@ public class Address implements Serializable {
 	public Address() {
 	}
 
-	public Address(String street, String number, String complement, String neighborhood, String zipcode, Client client, City city) {
+	public Address(Integer id, String street, String number, String complement, String neighborhood, String zipcode, Client client, City city) {
 		super();
+		this.id = id;
 		this.street = street;
 		this.number = number;
 		this.complement = complement;
