@@ -16,7 +16,7 @@ public class OrderItemPK implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name="product_id")
-	private Product Product;
+	private Product product;
 	
 	public Order getOrder() {
 		return order;
@@ -25,17 +25,17 @@ public class OrderItemPK implements Serializable {
 		this.order = order;
 	}
 	public Product getProduct() {
-		return Product;
+		return product;
 	}
-	public void setProduct(Product Product) {
-		this.Product = Product;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((order == null) ? 0 : order.hashCode());
-		result = prime * result + ((Product == null) ? 0 : Product.hashCode());
+		result = prime * result + ((product == null) ? 0 : product.hashCode());
 		return result;
 	}
 	@Override
@@ -52,10 +52,10 @@ public class OrderItemPK implements Serializable {
 				return false;
 		} else if (!order.equals(other.order))
 			return false;
-		if (Product == null) {
-			if (other.Product != null)
+		if (product == null) {
+			if (other.product != null)
 				return false;
-		} else if (!Product.equals(other.Product))
+		} else if (!product.equals(other.product))
 			return false;
 		return true;
 	}

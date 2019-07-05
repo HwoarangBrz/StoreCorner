@@ -42,8 +42,8 @@ public class OrderService {
 	@Autowired
 	private ClientService clientService;
 	
-	//@Autowired
-	//private EmailService emailService;
+	@Autowired
+	private EmailService emailService;
 	
 	public Order find(Integer id) {
 		Optional<Order> obj = repo.findById(id);
@@ -70,7 +70,7 @@ public class OrderService {
 			ip.setOrder(obj);
 		}
 		orderItemRepository.saveAll(obj.getItems());
-		//emailService.sendOrderConfirmationEmail(obj);
+		emailService.sendOrderConfirmationEmail(obj);
 		return obj;
 	}
 	

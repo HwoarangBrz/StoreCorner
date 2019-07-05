@@ -51,6 +51,7 @@ public class Product implements Serializable {
 		this.price = price;
 	}
 	
+	@JsonIgnore
 	public List<Order> getOrders() {
 		List<Order> list = new ArrayList<>();
 		for (OrderItem x : items) {
