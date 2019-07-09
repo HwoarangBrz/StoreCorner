@@ -7,7 +7,9 @@ import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Length;
 
-//@ClienteInsert
+import br.com.runner.storecorner.services.validation.ClientInsert;
+
+@ClientInsert
 public class NewClientDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
